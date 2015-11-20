@@ -1,0 +1,138 @@
+#!/bin/bash
+Principal() {
+clear
+echo "################################################################################"
+echo "#                                                                              #"
+echo "# UNIGRANRIO - Universidade do Grande Rio                                      #"
+echo "# Sistemas Operacionais Abertos                             Semestre 2 de 2015 #"
+echo "#------------------------------------------------------------------------------#"
+echo "# Professor: Luiz Fernando T. de Farias                    Turma:   EIN 359-01 #"
+echo "# Equipe desenvolvedora:                                                       #"
+echo "#          Aluno: Renan Thiago de Araujo Narciso                               #"
+echo "#          Aluno: Isabelly Neves Candido                                       #"
+echo "#          Aluno: Gabriel Santos de Mesquita                                   #"
+echo "#          Aluno: Jardel Souza de Lima                                         #"
+echo "#------------------------------------------------------------------------------#"
+echo "# Rio de Janeiro, `date +%d` de `date +%B` de `date +%Y`                                       #"
+echo "# Hora do sistema: `date +%H` Horas e `date +%M` Minutos                                       #"
+echo "#------------------------------------------------------------------------------#"
+echo "# Menu de Escolhas:                                                            #"
+echo "#        1) Exibir a quantidade de memória livre e usada no sistema            #"
+echo "#        2) Backup da pasta do usuário                                         #"
+echo "#        3) Procurar e listar arquivos                                         #"
+echo "#        4) Calculadora                                                        #"
+echo "#        5) Finalizar o script                                                 #"
+echo "#                                                                              #" 
+echo "# Selecione uma opção:                                                         #"                                      
+read opcao
+case $opcao in
+1)Memoria ;;
+2)Backup ;;
+3)Procurar ;;
+4)Calculadora ;;
+5)Finalizar ;;
+*)echo "Opção desconhecida"; sleep 1.5 ; clear ; Principal ;;
+esac
+}
+
+Memoria() {
+clear
+echo "################################################################################" 
+echo "#                                                                              #"
+echo "#                Quantidade de memória livre e usada no sistema                #"
+echo "#                                                                              #"
+free -mo;
+echo "#            Total       Usada      Livre    Divida     Buffer      Cache      #"
+echo "#                                                                              #"
+echo "################################################################################"
+echo "#                                                                              #"
+echo "# Aperte enter para continuar...                                               #"
+read msg
+clear
+Principal
+}
+
+Backup() {
+clear
+echo "################################################################################"  
+echo "# Criando backup da pasta do usuário...                                        #"
+sleep 2
+tar -cf backup-`date +%d`.`date +%m`.`date +%y`.tar.gz ~/* 2> .error.txt
+mv backup-`date +%d`.`date +%m`.`date +%y`.tar.gz ~ 2> .error.txt
+rm .error.txt
+echo "#                                                                              #"
+echo "# Backup criado com sucesso!                                                   #"
+echo "# Local de backup: Pasta do usuário.                                           #"
+echo "#                                                                              #"
+echo "################################################################################"
+echo "#                                                                              #"
+echo "# Aperte enter para continuar...                                               #"
+read msg
+clear
+Principal
+}
+
+Procurar() {
+clear
+echo "################################################################################"  
+echo "# Digite o arquivo a ser encontrado:                                           #"
+read arquivo
+echo "# Listando arquivo(s) encontrado(s)...                                         #"
+find / -iname "$arquivo" -exec ls "$arquivo" 2> .error.txt {} \;
+rm .error.txt
+echo "#                                                                              #"
+echo "################################################################################"
+echo "#                                                                              #"
+echo "# Aperte enter para continuar...                                               #"
+read msg
+clear
+Principal
+}
+
+Calculadora() {
+clear
+echo "################################################################################"
+echo "#                                                                              #"
+echo "# Você entrou na opçao 'Calculadora'                                           #"
+echo "# Insira o primeiro número:                                                    #"
+read NUM1
+echo "# Insira o segundo número:                                                     #"
+read NUM2
+echo "# Operador: [1]Soma - [2]Subtração - [3]Multiplicação - [4]Divisão:            #"
+read OPERACAO
+case $OPERACAO in
+1) let C=NUM1+NUM2 ; echo "$NUM1 + $NUM2 = $C                                                                  ";;
+2) let C=NUM1-NUM2 ; echo "$NUM1 - $NUM2 = $C                                                                  ";;
+3) let C=NUM1*NUM2 ; echo "$NUM1 * $NUM2 = $C                                                                  ";;
+4) let C=NUM1/NUM2 ; echo "$NUM1 / $NUM2 = $C                                                                  ";;
+esac
+echo "#                                                                              #"
+echo "################################################################################"
+echo "#                                                                              #"
+echo "# Aperte enter para continuar...                                               #"
+read msg
+clear
+Principal
+}
+
+Finalizar() {
+clear
+echo "Deseja realmente sair do programa? (S/N)"
+read opcao
+if [ $opcao = "S" ]
+then
+echo "Finalizando o programa...";
+sleep 2
+clear
+exit
+elif [ $opcao = "s" ]
+then
+echo "Finalizando o programa...";
+sleep 2
+clear
+exit
+else
+Principal
+fi
+}
+Principal
